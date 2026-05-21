@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bom Dia 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+  .cats-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    opacity: 0.07; display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    overflow: hidden;
+  }
+  .cats-bg span {
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(40px, 5vw, 72px);
+    transform: rotate(var(--r, 0deg));
+  }
+  .page {
+    position: relative; z-index: 1; background: #fff;
+    width: 100%; max-width: 600px; min-height: 520px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.08),
+                4px 4px 0 #f0d0e8, 8px 8px 0 #f8eaf4;
+    overflow: hidden;
+    animation: entrada 0.7s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes entrada {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent, transparent 39px, #e8d5f0 39px, #e8d5f0 40px
+    );
+    background-position: 0 80px;
+  }
+  .margin {
+    position: absolute; top: 0; bottom: 0; left: 64px;
+    width: 1.5px; background: rgba(255,100,140,0.25); pointer-events: none;
+  }
+  .holes {
+    position: absolute; top: 0; bottom: 0; left: 0; width: 64px;
+    display: flex; flex-direction: column; justify-content: space-around;
+    align-items: center; pointer-events: none; padding: 2rem 0;
+  }
+  .hole {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #f0f0f0; border: 1.5px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .content {
+    padding: 2.5rem 2.5rem 2rem 5.5rem;
+    min-height: 520px; display: flex; flex-direction: column;
+  }
+  .titulo {
+    font-family: 'Caveat', cursive; font-size: 2.4rem; font-weight: 700;
+    color: #cc2a7e; margin-bottom: 1.5rem; letter-spacing: 0.02em;
+    line-height: 1; animation: entrada 0.7s 0.1s cubic-bezier(.22,1,.36,1) both;
+  }
+  .mensagem-wrap { flex: 1; animation: entrada 0.7s 0.25s cubic-bezier(.22,1,.36,1) both; }
+  .mensagem {
+    font-size: 1.2rem; line-height: 2.5rem; color: #2a2028;
+    font-weight: 300; white-space: pre-wrap; min-height: 200px;
+  }
+  .cursor {
+    display: inline-block; width: 2px; height: 1.1em;
+    background: #cc2a7e; margin-left: 2px; vertical-align: text-bottom;
+    animation: pisca 0.8s step-end infinite;
+  }
+  .cursor.hide { display: none; }
+  @keyframes pisca { 0%,100%{opacity:1} 50%{opacity:0} }
+  .contador {
+    font-size: 11px; color: #d4a0c0; font-family: 'Caveat', cursive;
+    text-align: right; margin-bottom: 4px; letter-spacing: 0.03em;
+  }
+  .rodape {
+    margin-top: 2rem; padding-top: 1rem;
+    border-top: 1.5px dashed #e8d0f0;
+    font-family: 'Caveat', cursive; font-size: 1.15rem; font-weight: 600;
+    color: #cc2a7e; letter-spacing: 0.04em; text-align: center;
+    animation: entrada 0.7s 0.4s cubic-bezier(.22,1,.36,1) both;
+  }
+  .btn-novo {
+    display: block; margin: 1.25rem auto 0;
+    background: none; border: 1.5px solid #cc2a7e; border-radius: 20px;
+    padding: 7px 22px; font-family: 'Caveat', cursive; font-size: 1rem;
+    font-weight: 600; color: #cc2a7e; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.03em;
+    animation: entrada 0.7s 0.5s cubic-bezier(.22,1,.36,1) both;
+  }
+  .btn-novo:hover { background: #cc2a7e; color: #fff; transform: scale(1.04); }
+  .btn-novo:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+
+<div class="cats-bg" id="cats-bg"></div>
+
+<div class="page">
+  <div class="lines"></div>
+  <div class="margin"></div>
+  <div class="holes">
+    <div class="hole"></div>
+    <div class="hole"></div>
+    <div class="hole"></div>
+  </div>
+  <div class="content">
+    <div class="titulo" id="titulo">Bom dia! ☀️</div>
+    <div class="mensagem-wrap">
+      <div class="contador" id="contador"></div>
+      <div class="mensagem" id="mensagem"></div>
+    </div>
+    <div class="rodape">NUNCA SE ESQUEÇA, VOCÊ É IMPORTANTE 🌸</div>
+    <button class="btn-novo" id="btn-novo" onclick="novaMsg()">✨ nova mensagem</button>
+  </div>
+</div>
+
+<script>
+// ── gatinhos ──────────────────────────────────────────────
+const cats = ['🐱','🐈','🐾','😺','😸','🐈‍⬛','😻','🙀'];
+const bg = document.getElementById('cats-bg');
+for (let i = 0; i < 20; i++) {
+  const s = document.createElement('span');
+  s.textContent = cats[Math.floor(Math.random() * cats.length)];
+  s.style.setProperty('--r', (Math.random() * 30 - 15) + 'deg');
+  bg.appendChild(s);
+}
+
+// ── saudação ──────────────────────────────────────────────
+function saudacao() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bom dia! ☀️';
+  if (h < 18) return 'Boa tarde! 🌤';
+  return 'Boa noite! 🌙';
+}
+document.getElementById('titulo').textContent = saudacao();
+
+// ── 100 mensagens ─────────────────────────────────────────
+const MENSAGENS = [
+  "Hoje pode ser o dia em que você escreve a frase que vai mudar tudo. Ou não. Mas você nunca vai saber se não abrir o documento.",
+  "Sua imaginação é um dom raro. Não todo mundo consegue criar mundos inteiros dentro da própria cabeça — você consegue.",
+  "Dias difíceis também fazem parte da história. Até as melhores narrativas têm capítulos pesados.",
+  "Você não precisa estar bem para ser incrível. Às vezes a gente é incrível exatamente porque está tentando mesmo sem estar bem.",
+  "Cada palavra que você escreve é uma prova de que você não desistiu. Isso conta muito.",
+  "A protagonista da sua história favorita também teve dias em que quis largar tudo. E não largou. Você também não vai.",
+  "Existe uma versão de você no futuro que olha para hoje e pensa: foi ali que eu não desisti.",
+  "Escrever é um ato de coragem. Você coloca pedaços de si mesma no papel e oferece ao mundo. Isso é corajoso.",
+  "Nem todo dia precisa ser produtivo. Às vezes descansar é o capítulo que faltava.",
+  "Você carrega histórias que só você pode contar. Ninguém mais tem exatamente a sua voz.",
+  "O universo que você criou existe porque você quis que ele existisse. Isso é quase mágico.",
+  "Hoje, mesmo que só por um momento, permita-se lembrar de algo que você fez e que te deixou orgulhosa.",
+  "Sentir que não está avançando às vezes é sinal de que está processando. A história continua por baixo da superfície.",
+  "Você não precisa escrever um livro inteiro hoje. Uma frase já é uma conquista.",
+  "Tem dias que só de acordar já é o suficiente. Hoje pode ser um desses dias, e tá tudo bem.",
+  "A ficção científica existe porque alguém um dia se recusou a aceitar que o impossível era impossível. Você tem esse mesmo espírito.",
+  "Seu valor não está na quantidade de páginas que você escreve. Está em quem você é.",
+  "Mundos de fantasia precisam de pessoas que acreditam neles. Você acredita. Por isso eles existem.",
+  "Você pode não perceber, mas tem pessoas que se sentem menos sozinhas por causa das histórias que pessoas como você criam.",
+  "Criatividade não é um interruptor que se liga e desliga. É uma fogueira que precisa ser alimentada aos poucos.",
+  "Você é mais resistente do que imagina. Pense em tudo que já superou até aqui.",
+  "A história que você está guardando na cabeça merece ser contada. O mundo merece conhecê-la.",
+  "Imperfeições fazem parte do processo. Primeiras versões são supostas a ser imperfeitas.",
+  "Você escolheu criar em vez de só consumir. Isso já diz muito sobre quem você é.",
+  "Nem todo herói sabe que é herói no começo da história. Às vezes a revelação demora um pouco.",
+  "Seu ritmo é seu. Não existe prazo para florescer.",
+  "Uma pausa não é uma derrota. É fôlego para continuar.",
+  "Você tem a capacidade de transformar sentimentos em mundos. Isso é extraordinário.",
+  "Hoje o universo conspirou para que você existisse. Aproveite pelo menos um segundo disso.",
+  "Escritores carregam o peso de todos os personagens que ainda não nasceram. É muito. Você dá conta.",
+  "Cada história que você começa, mesmo que não termine, treina a sua voz. Nada é desperdiçado.",
+  "Você não precisa ser a pessoa mais talentosa da sala. Precisa ser a mais persistente.",
+  "A magia que você escreve pode ser ficção, mas o efeito que ela causa nas pessoas é completamente real.",
+  "Dias nublados também têm luz, às vezes é só mais difícil de enxergar. Ela está lá.",
+  "Você importa para mais pessoas do que você imagina, mesmo que elas não digam sempre.",
+  "Existe algo de muito corajoso em criar personagens que são vulneráveis. Você pratica isso com amor.",
+  "Não compare seu processo com o de ninguém. Você não está na mesma história.",
+  "Às vezes a melhor coisa que você pode fazer por uma história é deixá-la descansar um pouco.",
+  "Você tem o dom de enxergar o extraordinário no cotidiano. Isso é raro.",
+  "Uma boa ideia não tem pressa. Ela vai aparecer quando você menos esperar.",
+  "Lembre: até os planetas mais distantes têm luz chegando até eles. A sua também vai chegar.",
+  "Você não precisa resolver tudo hoje. Um passo pequeno ainda é um passo.",
+  "Tem um personagem dentro de você que ainda não encontrou a história certa. Ele vai encontrar.",
+  "Quem cria mundos imaginários geralmente entende o mundo real melhor do que parece.",
+  "Você merece os mesmos cuidados que dá aos seus personagens favoritos.",
+  "A semente que você plantou hoje pode ser a árvore que vai dar sombra para alguém lá na frente.",
+  "Escrever sobre o que dói pode ser uma das formas mais honestas de curar.",
+  "Você é a autora da sua própria história. Isso significa que os melhores capítulos ainda podem estar por vir.",
+  "Criatividade gosta de silêncio. Se hoje está quieto demais, pode ser que uma ideia esteja nascendo.",
+  "Você já superou 100% dos seus dias difíceis até agora. Esse também vai passar.",
+  "Existe grandeza nas histórias pequenas. Nem todo épico precisa salvar o mundo.",
+  "Você merece ser tratada com a mesma gentileza que você trata os seus personagens.",
+  "Às vezes o bloqueio criativo é o cérebro pedindo descanso em vez de mais esforço.",
+  "A fantasia existe porque o mundo real às vezes não é suficiente. Você entende isso profundamente.",
+  "Você não precisa ter tudo resolvido para começar a escrever. Pode começar no meio do caos.",
+  "Sua presença no mundo faz diferença, mesmo nos dias em que você não consegue ver isso.",
+  "Um conto inacabado na gaveta ainda tem mais valor do que mil histórias que nunca foram tentadas.",
+  "Você já foi a personagem principal em momentos que nem percebeu. Continue sendo.",
+  "Curiosidade é uma das formas mais bonitas de estar viva. Você tem muita dela.",
+  "Hoje pode ser só um dia comum. Dias comuns também constroem vidas incríveis.",
+  "Você carrega consigo a capacidade de emocionar pessoas que ainda nem conheceu.",
+  "Nenhum escritor chegou longe sem antes ter muita coisa não funcionando. Faz parte.",
+  "A voz que você tem hoje foi construída por tudo que você leu, sentiu e viveu. É única.",
+  "Você pode ser gentil consigo mesma hoje. Não precisa de motivo especial para isso.",
+  "O mundo da ficção científica foi construído por pessoas que não aceitaram os limites do presente. Você tem esse DNA.",
+  "Existe algo muito poderoso em alguém que cria por amor, não por obrigação.",
+  "Você não é seus dias ruins. Você é o padrão formado por todos os seus dias juntos.",
+  "Personagens de fantasia enfrentam dragões. Você enfrenta os seus todos os dias, mesmo sem capa.",
+  "Uma história bem contada pode mudar como alguém enxerga o mundo. A sua pode fazer isso.",
+  "Hoje, se nada mais funcionar, lembre que você existe e isso já é suficiente.",
+  "Você tem uma relação especial com mundos que não existem. Isso te torna especial também.",
+  "Quem escreve aprende a enxergar as pessoas com mais profundidade. Você tem esse olhar.",
+  "Não existe hora certa para a inspiração. Ela aparece quando quer. Você só precisa estar por perto.",
+  "Você já criou algo do nada. Isso é uma das coisas mais humanas e mais divinas que existem.",
+  "Dias de dúvida também têm seu lugar na história. Até os maiores escritores duvidaram.",
+  "Você não precisa impressionar ninguém hoje. Pode só existir.",
+  "A consistência de alguém que continua tentando vale mais do que o talento de quem desistiu.",
+  "Sua imaginação é um lugar que só você tem acesso. Que privilégio.",
+  "Você carrega dentro de si histórias que podem reconfortar pessoas em momentos de dor. Isso importa.",
+  "O processo criativo é bagunçado e não-linear e às vezes frustrante. E ainda assim, você volta.",
+  "Você merece orgulho de si mesma. Não de vez em quando — sempre.",
+  "Cada personagem que você cria com cuidado é um presente para quem vai lê-lo um dia.",
+  "Você não precisa de permissão para criar. Sua imaginação já é permissão suficiente.",
+  "Às vezes a história que mais precisamos contar é a que mais nos assusta começar.",
+  "Você tem a coragem de imaginar outros mundos. Isso significa que também tem coragem para este aqui.",
+  "Hoje pode não ser um dia de grandes descobertas. Pode ser só um dia. E tá ótimo assim.",
+  "Quem cria com o coração deixa marcas que duram muito mais do que imagina.",
+  "Você é mais do que o que produz. Você é quem você é, e isso já tem muito valor.",
+  "A próxima frase que você escrever pode ser a melhor que você já escreveu. Vale tentar.",
+  "Você existe num ponto único do espaço e do tempo. Não tem ninguém mais aqui com a sua história.",
+  "Criar é um ato de esperança. Você pratica isso toda vez que abre o documento.",
+  "Seus personagens precisam de você. Mas hoje, você pode precisar de si mesma primeiro.",
+  "Existe algo de eterno nas histórias bem contadas. As suas merecem essa eternidade.",
+  "Você chegou até aqui carregando muito. Pode pousar um pouco esse peso hoje.",
+  "Mundos inteiros já nasceram de uma única ideia que alguém decidiu não ignorar. Como a sua.",
+  "Você é a escritora, a leitora e a heroína. Às vezes tudo ao mesmo tempo.",
+  "O que você cria com amor nunca é pequeno. Nunca."
+];
+
+// ── controle de mensagens sem repetição ───────────────────
+const STORAGE_KEY = 'bomdia_fila';
+
+function getFila() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (Array.isArray(saved) && saved.length > 0) return saved;
+  } catch(e) {}
+  return embaralhar([...Array(MENSAGENS.length).keys()]);
+}
+
+function embaralhar(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function proximaMensagem() {
+  let fila = getFila();
+  const idx = fila.shift();
+  // se acabou, reembaralha tudo de novo
+  if (fila.length === 0) fila = embaralhar([...Array(MENSAGENS.length).keys()]);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(fila));
+  return { texto: MENSAGENS[idx], restantes: fila.length };
+}
+
+// ── efeito de digitação ───────────────────────────────────
+function digitar(el, texto, onFim) {
+  el.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  el.appendChild(cursor);
+  let i = 0;
+  const vel = Math.max(16, Math.min(40, Math.round(4500 / texto.length)));
+  const t = setInterval(() => {
+    cursor.insertAdjacentText('beforebegin', texto[i]);
+    i++;
+    if (i >= texto.length) {
+      clearInterval(t);
+      cursor.className = 'cursor hide';
+      if (onFim) onFim();
+    }
+  }, vel);
+}
+
+// ── mostrar mensagem ──────────────────────────────────────
+const elMsg = document.getElementById('mensagem');
+const elBtn = document.getElementById('btn-novo');
+const elContador = document.getElementById('contador');
+
+function novaMsg() {
+  elBtn.disabled = true;
+  const { texto, restantes } = proximaMensagem();
+  const vistas = MENSAGENS.length - restantes;
+  elContador.textContent = `mensagem ${vistas} de ${MENSAGENS.length}`;
+  digitar(elMsg, texto, () => { elBtn.disabled = false; });
+}
+
+// inicia
+novaMsg();
+</script>
+</body>
+</html>
